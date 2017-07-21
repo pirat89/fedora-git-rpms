@@ -615,7 +615,7 @@ cat %{name}.lang >> bin-man-doc-files
 chmod -R g-w %{buildroot}
 find %{buildroot} -name git-mergetool--lib | xargs chmod a-x
 # These files probably are not needed
-find . -name .gitignore -delete
+find . -name '.*/\.\(git\(attributes\|ignore\)\|perlcriticrc\)' -delete
 chmod a-x Documentation/technical/api-index.sh
 find contrib -type f | xargs chmod -x
 
@@ -812,6 +812,7 @@ rm -rf %{buildroot}
 - Move documentation files from all subpackages into the %%{_pkgdocdir}
   directory, so links inside doc and man files are correct
   Resolves: #1357438
+- Quiet a few rpmlint complaints regarding hidden files in contrib dir
 
 * Thu Jul 13 2017 Gwyn Ciesla <limburgher@gmail.com> - 2.13.3-1
 - Update to 2.13.3
