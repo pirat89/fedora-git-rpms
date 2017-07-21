@@ -216,7 +216,6 @@ Group:          Development/Tools
 Requires:       less
 Requires:       openssh-clients
 Requires:       zlib >= 1.2
-Requires:       libcurl
 %description core
 Git is a fast, scalable, distributed revision control system with an
 unusually rich command set that provides both high-level operations
