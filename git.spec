@@ -374,22 +374,17 @@ echo gitexecdir = %{_bindir} >> config.mak
 
 # Filter bogus perl requires
 # packed-refs comes from a comment in contrib/hooks/update-paranoid
-# YAML::Any is optional and not available on el5
 %if %{use_new_rpm_filters}
 %{?perl_default_filter}
 %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}perl\\(packed-refs\\)
 %if ! %{defined perl_bootstrap}
 %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}perl\\(Term::ReadKey\\)
 %endif
-%else
-cat << \EOF > %{name}-req
-#!/bin/sh
-%{__perl_requires} $* |\
-sed -e '/perl(packed-refs)/d'
-EOF
-
-%global __perl_requires %{_builddir}/%{name}-%{version}/%{name}-req
-chmod +x %{__perl_requires}
+%else # ! use_new_rpm_filters
+%{?filter_setup:
+%filter_from_requires /perl(packed-refs)/d
+%filter_setup
+}
 %endif
 
 %build
